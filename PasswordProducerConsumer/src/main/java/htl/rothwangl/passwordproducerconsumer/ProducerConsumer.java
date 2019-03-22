@@ -1,14 +1,15 @@
 package htl.rothwangl.passwordproducerconsumer;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProducerConsumer implements Runnable{
 
-    private ArrayList<String> queue;
+    private ArrayList<Password> queue;
 
-    public ProducerConsumer(ArrayList<String> queue) {
+    public ProducerConsumer(ArrayList<Password> queue) {
         this.queue = queue;
     }
 
@@ -16,11 +17,10 @@ public class ProducerConsumer implements Runnable{
     public void run() {
         while(true){
             synchronized (queue){
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ProducerConsumer.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Scanner scn = new Scanner(System.in);
+                System.out.println("Please input Password: ");
+                String pw = scn.next();
+                queue.add(new Password(pw));
             }
         }
     }
