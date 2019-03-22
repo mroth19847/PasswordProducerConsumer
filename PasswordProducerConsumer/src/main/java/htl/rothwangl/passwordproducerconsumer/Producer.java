@@ -2,14 +2,12 @@ package htl.rothwangl.passwordproducerconsumer;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class ProducerConsumer implements Runnable{
+public class Producer implements Runnable{
 
     private ArrayList<Password> queue;
 
-    public ProducerConsumer(ArrayList<Password> queue) {
+    public Producer(ArrayList<Password> queue) {
         this.queue = queue;
     }
 
