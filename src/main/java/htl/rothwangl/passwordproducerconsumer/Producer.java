@@ -19,11 +19,11 @@ public class Producer implements Runnable {
             synchronized (queue) {
                 if (queue.size() < 5) {
                     Scanner scn = new Scanner(System.in);
-                    System.out.print("Please input Password: ");
+                    System.out.print(Thread.currentThread().getName()+": Please input Password: ");
                     String pw = scn.next();
                     queue.add(new Password(pw));
                     queue.notifyAll();
-                    System.out.println("Password \"" + pw + "\" was added to the queue! Queue size: " + queue.size());
+                    System.out.println(Thread.currentThread().getName()+": Password \"" + pw + "\" was added to the queue! Queue size: " + queue.size());
                 } else {
                     try {
                         queue.wait();

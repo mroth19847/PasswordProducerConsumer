@@ -22,22 +22,24 @@ public class Consumer implements Runnable {
                 if (queue.size() > 0) {
                     pw = queue.get(0);
                     queue.remove(pw);
-                    System.out.println("Password \"" + pw.getPassword() + "\" is in work. Queue size: " + queue.size());
+                    System.out.println(Thread.currentThread().getName()+": Password \"" + pw.getPassword() + "\" is in work. Queue size: " + queue.size());
                 } else {
-                    System.out.println("Queue is empty, waiting for producers!");
+                    System.out.println(Thread.currentThread().getName()+": Queue is empty, waiting for producers!");
                     try {
                         queue.notifyAll();
 
                         queue.wait();
+                        continue;
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
+            
             if (findPW(pw)) {
-                System.out.println("PW was found!");
+                System.out.println(Thread.currentThread().getName()+": PW was found!");
             } else {
-                System.out.println("PW was not found!");
+                System.out.println(Thread.currentThread().getName()+": PW was not found!");
             }
         }
     }
