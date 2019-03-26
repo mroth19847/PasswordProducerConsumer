@@ -11,4 +11,10 @@ public class Password {
     public boolean check(String test){
         return test.equals(password);
     }
+
+    public String getPassword() {
+        return password;
+    }
+    
+    
 }
