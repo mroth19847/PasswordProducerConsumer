@@ -26,13 +26,15 @@ public class Consumer implements Runnable {
                 } else {
                     System.out.println("Queue is empty, waiting for producers!");
                     try {
+                        queue.notifyAll();
+
                         queue.wait();
                     } catch (InterruptedException ex) {
                         Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-            if(findPW(pw)){
+            if (findPW(pw)) {
                 System.out.println("PW was found!");
             } else {
                 System.out.println("PW was not found!");
@@ -42,19 +44,18 @@ public class Consumer implements Runnable {
 
     private boolean findPW(Password pw) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("passwords.txt"));
-            String line = br.readLine();
+            BufferedReader br = new BufferedReader(new FileReader("D:\\Projekte\\Java\\PasswordConsumerProducer_Repository\\src\\main\\java\\htl\\rothwangl\\passwordproducerconsumer\\passwords.txt"));
+            String line = "";
             boolean found = false;
-            while (line != null) {
+            while ((line = br.readLine()) != null) {
                 if (pw.check(line)) {
                     found = true;
                     break;
                 }
-                line = br.readLine();
             }
             return found;
         } catch (Exception ex) {
-            System.out.println("File not found!");
+            ex.printStackTrace();
             return false;
         }
     }

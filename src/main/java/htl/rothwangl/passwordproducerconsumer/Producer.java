@@ -17,16 +17,19 @@ public class Producer implements Runnable {
     public void run() {
         while (true) {
             synchronized (queue) {
-                try {
+                if (queue.size() < 5) {
                     Scanner scn = new Scanner(System.in);
                     System.out.print("Please input Password: ");
                     String pw = scn.next();
                     queue.add(new Password(pw));
                     queue.notifyAll();
-                    System.out.println("Password \""+pw+"\" was added to the queue! Queue size: "+queue.size());
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println("Password \"" + pw + "\" was added to the queue! Queue size: " + queue.size());
+                } else {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             }
